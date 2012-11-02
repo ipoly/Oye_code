@@ -107,8 +107,9 @@ ${oye.dir}/json/cart.jsonp
     + **prop: string** 商品属性
     + **siteName: string** 商城名称
     + **url: string** 商品地址
-    + **pic: string Array** 商品截图列表
     + **number: int** 订购数量，默认为1
+    + **pic: object Array** 商品截图列表
+        + **href: string** 图片地址
 
 
 

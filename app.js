@@ -230,6 +230,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
     if ((_ref = o.dir) == null) {
       o.dir = "http://192.168.1.42:8000";
     }
+    o.picRoot = "http://www.oye.com/";
     o.cartData = {
       status: {
         action: "",
@@ -272,7 +273,23 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       if (trigger.length) {
         return trigger[0].click();
       } else {
-        return o.screenShotCallback(["http://pic.cnhan.com/uploadfile/2012/0905/20120905040655740.jpg", "http://pic.cnhan.com/uploadfile/2012/0905/20120905040700746.jpg", "http://pic.cnhan.com/uploadfile/2012/0905/20120905040700342.jpg", "http://pic.cnhan.com/uploadfile/2012/0905/20120905040831340.jpg", "http://pic.cnhan.com/uploadfile/2012/0905/20120905040832569.jpg", "http://pic.cnhan.com/uploadfile/2012/0905/20120905040832588.jpg", "http://pic.cnhan.com/uploadfile/2012/0905/20120905040833724.jpg"]);
+        return o.screenShotCallback([
+          {
+            href: "http://pic.cnhan.com/uploadfile/2012/0905/20120905040655740.jpg"
+          }, {
+            href: "http://pic.cnhan.com/uploadfile/2012/0905/20120905040700746.jpg"
+          }, {
+            href: "http://pic.cnhan.com/uploadfile/2012/0905/20120905040700342.jpg"
+          }, {
+            href: "http://pic.cnhan.com/uploadfile/2012/0905/20120905040831340.jpg"
+          }, {
+            href: "http://pic.cnhan.com/uploadfile/2012/0905/20120905040832569.jpg"
+          }, {
+            href: "http://pic.cnhan.com/uploadfile/2012/0905/20120905040832588.jpg"
+          }, {
+            href: "http://pic.cnhan.com/uploadfile/2012/0905/20120905040833724.jpg"
+          }
+        ]);
       }
     }).on("click", ".oye_icon_img", function() {
       if (!o.cartData.current.pic.length) {
@@ -297,7 +314,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       clearTimeout(o.timer);
       type = e.type;
       return o.timer = setTimeout(function() {
-        if (type === "mouseenter") {
+        if (type === "mouseenter" && o.cartData.list.length) {
           cart.show();
           return icon.addClass("active");
         } else {
@@ -306,7 +323,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
         }
       }, 300);
     }).on("refresh", function(e, data) {
-      var cart, i, panel, t, _base, _i, _len, _ref1, _ref2;
+      var cart, i, ico, panel, t, _base, _i, _len, _ref1, _ref2;
       t = $(this);
       panel = t.find(".oye_panel");
       cart = t.find(".oye_cart");
@@ -317,6 +334,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       if (!o.fetchMethods || !o.fetchMethods.path.test(location.href)) {
         return panel.html(templates.panel3.render(data));
       }
+      data.current = null;
       _ref1 = data.list;
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
         i = _ref1[_i];
@@ -329,9 +347,15 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
           _base.pic = [];
         }
         win.oye_id = data.current.CartID;
-        return panel.html(templates.panel1.render(data));
+        panel.html(templates.panel1.render(data));
       } else {
-        return panel.html(templates.panel2.render(data));
+        panel.html(templates.panel2.render(data));
+      }
+      ico = $(".oye_icon_cart");
+      if (cart.is(":visible")) {
+        console.log("ico:", ico.is(".active"));
+        ico.addClass("active");
+        return console.log("ico:", ico.is(".active"));
       }
     }).on("alert", function(e, data) {
       var n;
@@ -382,10 +406,21 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       $.extend(para, data);
       cartData.status.action = para.action;
       return $.getJSON("http://www.oye.com/api/plugins.php?callback=?", para, function(data) {
+        var i, item, _i, _j, _len, _len1, _ref1;
         if (data.Error) {
           $.extend(cartData.status, data);
           ui.trigger("alert", data.msg);
         } else {
+          for (_i = 0, _len = data.length; _i < _len; _i++) {
+            item = data[_i];
+            _ref1 = item.pic;
+            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+              i = _ref1[_j];
+              if (!/^http/.test(i.href)) {
+                i.href = o.picRoot + i.href;
+              }
+            }
+          }
           cartData.list = data;
           if (cartData.status.action === "AddCart") {
             ui.trigger("alert", "恭喜您！商品已加入购物车。");
@@ -402,6 +437,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       return o.trigger("cartReload");
     }), 1000 * 60 * o.sessionTimeout);
     o.screenShotCallback = function(data) {
+      var i, _i, _len;
       if (typeof console !== "undefined" && console !== null) {
         console.log("截图", data);
       }
@@ -409,6 +445,12 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
         return ui.trigger("alert", data.msg);
       } else {
         this.cartData.timeMark = (new Date()).toLocaleTimeString();
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          i = data[_i];
+          if (!/^http/.test(i.href)) {
+            i.href = o.picRoot + i.href;
+          }
+        }
         this.cartData.current.pic = data;
         ui.trigger("refresh", this.cartData);
         return ui.trigger("alert", "恭喜您！截图已添加。");
