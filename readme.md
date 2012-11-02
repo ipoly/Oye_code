@@ -2,7 +2,7 @@
 
 ## 文件目录：
 + ### app.js
-    主脚本，由Activex通过script标记插入页面。
+    主脚本，由插件通过script标记插入页面。
 
 + ### hostname.js
      各商城的抓取设置脚本。
@@ -71,34 +71,44 @@
 ${oye.dir}/json/cart.jsonp
 
 ### request可用参数
-+ ##### 增加一个抓取数据
-    + **action: add**
+1. #### 请求购物车列表
+    + **action: Cartlist**
+
+2. #### 增加一个抓取数据
+    + **action: AddCart**
     + siteName: string
     + goodsName: string
     + price: string
     + prop: string
     + img: string
     + url: string
+    + number: 1
 
-+ ##### 删除一个商品记录
-    + **action: del**
-    + id: string
+3. #### 删除一个商品记录
+    + **action: DelCart**
+    + CartID: string
 
 
 ### response数据
-+ **格式** jsonp
-+ **内容**
-    + **isLogin: boolean** 是否登陆
-    + **list: object Array** 最新的5条商品记录
-        + **id: string** 商品id
-        + **goodsName: string** 商品名称
-        + **img: string** 商品图片地址
-        + **price: string** 商品价格
-        + **prop: string** 商品属性
-        + **siteNmae: string** 商城名称
-        + **url: string** 商品地址
-        + **pic: string Array** 商品截图列表
-        + **number: int** 订购数量，默认为1
+**格式** jsonp
+
+1. **object** 错误状态 
+    + **Error: int** 错误代码
+        + 1: 尚未登录，请先登陆！
+        + 2: 添加失败，传入数据有误！
+        + 3: 系统内部处理失败，请重试！
+    + **msg: string** 错误信息
+
+2. **list: object Array** 最新的5条商品记录
+    + **CartID: string** 商品id
+    + **goodsName: string** 商品名称
+    + **img: string** 商品图片地址
+    + **price: string** 商品价格
+    + **prop: string** 商品属性
+    + **siteName: string** 商城名称
+    + **url: string** 商品地址
+    + **pic: string Array** 商品截图列表
+    + **number: int** 订购数量，默认为1
 
 
 
