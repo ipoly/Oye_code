@@ -10,6 +10,7 @@ $ = o.$
 $ ->
     # 文件根目录
     o.dir ?= "http://192.168.1.42:8000"
+    o.picRoot = "http://www.oye.com/"
     # 购物车数据缓存
     o.cartData = {status:{action:"",Error:"",msg:""},list:[]}
     # session刷新频率
@@ -110,13 +111,13 @@ $ ->
         else
             # 测试用数据
             o.screenShotCallback([
-                "http://pic.cnhan.com/uploadfile/2012/0905/20120905040655740.jpg",
-                "http://pic.cnhan.com/uploadfile/2012/0905/20120905040700746.jpg",
-                "http://pic.cnhan.com/uploadfile/2012/0905/20120905040700342.jpg",
-                "http://pic.cnhan.com/uploadfile/2012/0905/20120905040831340.jpg",
-                "http://pic.cnhan.com/uploadfile/2012/0905/20120905040832569.jpg",
-                "http://pic.cnhan.com/uploadfile/2012/0905/20120905040832588.jpg",
-                "http://pic.cnhan.com/uploadfile/2012/0905/20120905040833724.jpg"
+                {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040655740.jpg"},
+                {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040700746.jpg"},
+                {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040700342.jpg"},
+                {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040831340.jpg"},
+                {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040832569.jpg"},
+                {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040832588.jpg"},
+                {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040833724.jpg"}
             ])
     )
     # 打开截图浏览
@@ -129,7 +130,7 @@ $ ->
                         width  : 50,
                         height : 50
                     }
-            },
+            }
             afterClose:->
                 ui.trigger("show")
         })
@@ -142,7 +143,7 @@ $ ->
         type = e.type
         o.timer = setTimeout(
             ->
-                if type is "mouseenter"
+                if type is "mouseenter" and o.cartData.list.length
                     cart.show()
                     icon.addClass("active")
                 else
@@ -165,6 +166,7 @@ $ ->
             return panel.html(templates.panel3.render(data))
 
         # 判断当前页是否已在购物车中
+        data.current = null
         data.current = i for i in data.list when i?.url is location.href
         if data.current
             data.current.pic?= []
@@ -174,6 +176,11 @@ $ ->
         else
             panel.html(templates.panel2.render(data))
 
+        ico = $(".oye_icon_cart")
+        if cart.is(":visible")
+            console.log "ico:",ico.is(".active")
+            ico.addClass("active")
+            console.log "ico:",ico.is(".active")
     )
     # 消息提示
     .on("alert",(e,data)->
@@ -225,6 +232,11 @@ $ ->
                     $.extend(cartData.status,data)
                     ui.trigger("alert",data.msg)
                 else
+                    # 补全图片的相对路径
+                    for item in data
+                        for i in item.pic
+                            i.href = o.picRoot + i.href if !/^http/.test(i.href)
+
                     cartData.list = data
                     if cartData.status.action is "AddCart"
                         ui.trigger("alert","恭喜您！商品已加入购物车。")
@@ -247,6 +259,8 @@ $ ->
             ui.trigger("alert",data.msg)
         else
             @cartData.timeMark = (new Date()).toLocaleTimeString()
+            for i in data
+                i.href = o.picRoot + i.href if !/^http/.test(i.href)
             @cartData.current.pic = data
             ui.trigger("refresh",@cartData)
             ui.trigger("alert","恭喜您！截图已添加。")
