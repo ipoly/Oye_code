@@ -46,7 +46,7 @@ templates = {
                 </tr>
             <thead>
             <tbody>
-            {@each list as item}
+            {@each list.slice(0,5) as item}
                 <tr>
                     <th><a href="${item.url}" title="${item.goodsName}"><img src="${item.img}"/></a></th>
                     <td><a href="${item.url}" title="${item.goodsName}">${item.goodsName}</a></td>
@@ -267,7 +267,7 @@ o.screenShotCallback = (data)->
 
 # 调整惠惠的尺寸
 $("body").on("mouseenter","#youdaoGWZS,#i1e0fgj",->
-    $(@).animate({width:ui.offset().left})
+    $(@).animate({width:ui.offset().left-20})
 )
 
 # 提示载入
