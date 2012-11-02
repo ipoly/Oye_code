@@ -196,13 +196,13 @@ $ ->
 
     # 使用jquery的事件绑定来扩展oye对象
     o.on = ->
-        $.fn.on.apply($(@),arguments)
+        $(@).on(arguments...)
 
     o.trigger = ->
-        $.fn.trigger.apply($(@),arguments)
+        $(@).trigger(arguments...)
 
     o.off = ->
-        $.fn.off.apply($(@),arguments)
+        $(@).off(arguments...)
 
     # 抓取数据
     o.on("fetchdata",->
@@ -232,7 +232,7 @@ $ ->
                 else
                     cartData.list = data
                     if cartData.status.action is "AddCart"
-                        ui.trigger("alert","恭喜您！商品已加入购物车。点这里可以添加截图哟&darr;")
+                        ui.trigger("alert","恭喜您！商品已加入购物车。")
                     if cartData.status.action is "DelCart"
                         ui.trigger("alert","商品已删除。")
                 cartData.timeMark = (new Date()).toLocaleTimeString()
