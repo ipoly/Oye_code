@@ -140,6 +140,7 @@ body {
   cursor: pointer;
 }
 #oye_submit {
+  display: inline-block;
   background: url(img/sprite.png) -100px -120px no-repeat;
   width: 104px;
   height: 29px;
