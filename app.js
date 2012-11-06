@@ -339,7 +339,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
     if (data.status.Error === 1) {
       return panel.html(templates.panel0);
     }
-    if (!o.fetchMethods || !o.fetchMethods.path.test(location.href)) {
+    if (o.fetchMethods && !o.fetchMethods.path.test(location.href)) {
       return panel.html(templates.panel3.render(data));
     }
     data.current = null;
@@ -395,7 +395,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
   };
 
   o.on("fetchdata", function() {
-    var data, name, value, _ref1;
+    var data, name, value, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
     data = {};
     _ref1 = o.fetchMethods;
     for (name in _ref1) {
@@ -403,9 +403,31 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       value = _ref1[name];
       data[name] = $.type(value) === "function" ? value() : value;
     }
+    if ((_ref2 = data.goodsName) == null) {
+      data.goodsName = document.title;
+    }
+    if ((_ref3 = data.price) == null) {
+      data.price = "";
+    }
+    if ((_ref4 = data.prop) == null) {
+      data.prop = "";
+    }
+    if ((_ref5 = data.img) == null) {
+      data.img = this.fetchImg();
+    }
+    if ((_ref6 = data.siteName) == null) {
+      data.siteName = location.hostname;
+    }
     data.url = win.location.href;
     data.action = "AddCart";
     data.number = 1;
+    for (name in data) {
+      if (!__hasProp.call(data, name)) continue;
+      value = data[name];
+      if (value.length > 400) {
+        $.error("" + name + " 的长度超过400。");
+      }
+    }
     delete data.path;
     return this.trigger("cartReload", data);
   }).on("cartReload", function(e, data) {
@@ -448,6 +470,26 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
   setInterval((function() {
     return o.trigger("cartReload");
   }), 1000 * 60 * o.sessionTimeout);
+
+  o.fetchImg = function() {
+    var imgs;
+    imgs = $("img:visible:not([src$=gif])");
+    imgs = imgs.filter(function() {
+      var t, top, w;
+      t = $(this);
+      w = $(win);
+      top = t.offset().top - w.scrollTop();
+      if (top > 0 && top < w.height()) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    imgs.sort(function(a, b) {
+      return $(b).height() - $(a).height();
+    });
+    return imgs.first().attr("src");
+  };
 
   o.screenShotCallback = function(data) {
     var i, _i, _len;
