@@ -277,7 +277,8 @@ o.fetchImg = ->
 
 # 截屏回调
 o.screenShotCallback = (data)->
-    console?.log "截图",data
+    console?.log "截图成功",data
+    return $.error("截图数据为空") unless data
     if data.Error
         ui.trigger("alert",data.msg)
     else
