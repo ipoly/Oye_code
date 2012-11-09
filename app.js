@@ -456,6 +456,11 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
         return ui.trigger("alert", "恭喜您！截图已添加。");
       }
     };
+    $("body").on("mouseenter", "#youdaoGWZS,#i1e0fgj", function() {
+      return $(this).animate({
+        width: ui.offset().left
+      });
+    });
     return typeof console !== "undefined" && console !== null ? console.log("脚本已载入") : void 0;
   });
 

@@ -181,6 +181,7 @@ $ ->
             console.log "ico:",ico.is(".active")
             ico.addClass("active")
             console.log "ico:",ico.is(".active")
+
     )
     # 消息提示
     .on("alert",(e,data)->
@@ -264,6 +265,11 @@ $ ->
             @cartData.current.pic = data
             ui.trigger("refresh",@cartData)
             ui.trigger("alert","恭喜您！截图已添加。")
+
+    # 调整惠惠的尺寸
+    $("body").on("mouseenter","#youdaoGWZS,#i1e0fgj",->
+        $(@).animate({width:ui.offset().left})
+    )
 
     # 提示载入
     console?.log "脚本已载入"
