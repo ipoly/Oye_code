@@ -250,7 +250,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
     scriptCharset: "utf-8"
   });
 
-  $.getScript("" + o.dir + location.hostname + ".js").done(function() {
+  $.getScript("" + o.dir + "api/js/" + location.hostname + ".js").done(function() {
     return ui.trigger("refresh", o.cartData);
   });
 
