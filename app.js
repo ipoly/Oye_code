@@ -226,10 +226,10 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
   $ = o.$;
 
   if ((_ref = o.dir) == null) {
-    o.dir = "http://www.oye.com/api/js";
+    o.dir = "http://oye.zerdoor.com/api/js";
   }
 
-  o.picRoot = "http://www.oye.com/";
+  o.picRoot = "http://oye.zerdoor.com/";
 
   o.cartData = {
     status: {

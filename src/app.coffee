@@ -8,8 +8,8 @@ win = @
 o = @oye
 $ = o.$
 # 文件根目录
-o.dir ?= "http://www.oye.com/api/js"
-o.picRoot = "http://www.oye.com/"
+o.dir ?= "http://oye.zerdoor.com/api/js"
+o.picRoot = "http://oye.zerdoor.com/"
 # 购物车数据缓存
 o.cartData = {status:{action:"",Error:"",msg:""},list:[]}
 # session刷新频率
