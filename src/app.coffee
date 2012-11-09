@@ -24,7 +24,7 @@ $.getScript("#{o.dir}api/js/#{location.hostname}.js").done(-> ui.trigger("refres
 templates = {
     ui:"""
         <div class="oye_ui">
-            <a id="oye_logo" href="http://www.oye.com"></a>
+            <a id="oye_logo" href="#{o.dir}"></a>
             <div class="oye_cart"></div>
             <div class="oye_panel"> </div>
             <div id="oye_notice"></div>
@@ -67,7 +67,7 @@ templates = {
     """)
 
     # 未登陆
-    panel0:"""<span class="lh40">点我 <a href="http://www.oye.com/user.php?act=default">登录</a> 以使用代购功能</span>"""
+    panel0:"""<span class="lh40">点我 <a href="#{o.dir}user.php?act=default">登录</a> 以使用代购功能</span>"""
 
     # 当前页已在购物车中
     panel1:juicer("""
