@@ -8,7 +8,7 @@ win = @
 o = @oye
 $ = o.$
 # 文件根目录
-o.dir ?= "http://192.168.1.42:8000"
+o.dir ?= "http://www.oye.com/api/js"
 o.picRoot = "http://www.oye.com/"
 # 购物车数据缓存
 o.cartData = {status:{action:"",Error:"",msg:""},list:[]}

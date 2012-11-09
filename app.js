@@ -226,7 +226,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
   $ = o.$;
 
   if ((_ref = o.dir) == null) {
-    o.dir = "http://192.168.1.42:8000";
+    o.dir = "http://www.oye.com/api/js";
   }
 
   o.picRoot = "http://www.oye.com/";

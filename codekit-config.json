@@ -81,15 +81,6 @@
       "outputAbbreviatedPath" : "\/source\/jquery.fancybox-media-ck.js",
       "fileType" : 64
     },
-    "\/main.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/main.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
     "\/source\/helpers\/jquery.fancybox-buttons.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -122,6 +113,15 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/detail.tmall.com-ck.js",
       "fileType" : 64
+    },
+    "\/main.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/main.css",
+      "outputAbbreviatedPath" : "\/No Output Path",
+      "fileType" : 16
     },
     "\/src\/book.360buy.com.coffee" : {
       "ignoreWasSetByUser" : 0,
@@ -447,7 +447,7 @@
     "jsCheckerReservedNamesString" : "juicer:false,CONSTANT",
     "javascriptOutputStyle" : 1,
     "stylusDebugStyle" : 0,
-    "hamlUseCDATA" : false,
+    "hamlUseCDATA" : 0,
     "hamlAutoOutputPathStyle" : 2,
     "sassDebugStyle" : 0,
     "hamlOutputStyle" : 0,
@@ -485,8 +485,8 @@
       "evil" : 0,
       "strict" : 0,
       "multistr" : 0,
-      "couch" : 0,
       "wsh" : 0,
+      "couch" : 0,
       "laxbreak" : 0,
       "rhino" : 0,
       "globalstrict" : 0,
@@ -504,10 +504,10 @@
       "newcap" : 1,
       "forin" : 0,
       "regexdash" : 0,
-      "node" : 0,
       "browser" : 1,
-      "eqnull" : 0,
       "dojo" : 0,
+      "eqnull" : 0,
+      "node" : 0,
       "mootools" : 0,
       "iterator" : 0,
       "undef" : 1,
