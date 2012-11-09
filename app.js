@@ -361,7 +361,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
     if (cart.is(":visible")) {
       return ico.addClass("active");
     }
-  }).on("alert", function(e, data) {
+  }).on("alert statusIn", function(e, data) {
     var n;
     if (data == null) {
       return;
@@ -370,9 +370,13 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
     n.html(data);
     clearTimeout(o.alertTimer);
     n.stop(true, true).fadeIn();
-    return o.alertTimer = setTimeout(function() {
-      return n.fadeOut();
-    }, 3000);
+    if (e.type === "alert") {
+      return o.alertTimer = setTimeout(function() {
+        return n.fadeOut();
+      }, 3000);
+    }
+  }).on("statusOut", function() {
+    return $(this).find("#oye_notice").fadeOut();
   });
 
   $("body").append(ui);
@@ -487,6 +491,10 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       return $(b).height() - $(a).height();
     });
     return imgs.first().attr("src");
+  };
+
+  o.screenShotDone = function() {
+    return ui.trigger("statusIn", "截图保存中...");
   };
 
   o.screenShotCallback = function(data) {

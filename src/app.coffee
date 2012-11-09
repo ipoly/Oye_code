@@ -180,17 +180,23 @@ ui = $(templates.ui)
         ico.addClass("active")
 
 )
-# 消息提示
-.on("alert",(e,data)->
+# 消息和状态提示
+.on("alert statusIn",(e,data)->
     return unless data?
     n = $(@).find("#oye_notice")
     n.html(data)
     clearTimeout(o.alertTimer)
     n.stop(true,true).fadeIn()
-    o.alertTimer = setTimeout(->
-        n.fadeOut()
-    ,3000)
+    if e.type is "alert"
+        o.alertTimer = setTimeout(->
+            n.fadeOut()
+        ,3000)
 )
+# 退出状态
+.on("statusOut",->
+    $(@).find("#oye_notice").fadeOut()
+)
+
 
 $("body").append(ui)
 
@@ -274,6 +280,10 @@ o.fetchImg = ->
         $(b).height() - $(a).height()
     )
     imgs.first().attr("src")
+
+# 截屏动作完成
+o.screenShotDone = ->
+    ui.trigger("statusIn","截图保存中...")
 
 # 截屏回调
 o.screenShotCallback = (data)->
