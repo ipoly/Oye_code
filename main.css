@@ -179,7 +179,10 @@ body {
   position: absolute;
   right: -1px;
   bottom: 100%;
-  background-color: #FF9900;
+  background-color: #FEB753;
   color: #fff;
   padding: 0 10px;
+}
+.oye_loading {
+  vertical-align: middle;
 }

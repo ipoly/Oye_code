@@ -11,11 +11,19 @@ $ = o.$
 o.dir ?= "http://oye.zerdoor.com/"
 # 购物车数据缓存
 o.cartData = {status:{action:"",Error:"",msg:""},list:[]}
+
 # session刷新频率
 o.sessionTimeout = 20
 $("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}api/js/main.css' media='all' />")
 $("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}api/js/source/jquery.fancybox.css' media='all' />")
 $("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}api/js/source/helpers/jquery.fancybox-thumbs.css' media='all' />")
+
+# 预载图片
+preloadImg =["temp1.png","loading.gif"]
+for img in preloadImg
+    a = $("<img/>")
+    a.attr("src","#{o.dir}api/js/#{img}")
+
 
 # 载入对应的抓取脚本
 $.ajaxSetup({scriptCharset:"utf-8"})
@@ -283,7 +291,7 @@ o.fetchImg = ->
 
 # 截屏动作完成
 o.screenShotDone = ->
-    ui.trigger("statusIn","截图保存中...")
+    ui.trigger("statusIn","截图保存中<img alt='...' src='#{o.dir}api/js/loading.gif' class='oye_loading'/>")
 
 # 截屏回调
 o.screenShotCallback = (data)->

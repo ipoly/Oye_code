@@ -216,7 +216,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
   --------------------------------------------
   */
 
-  var $, o, templates, ui, win, _ref,
+  var $, a, img, o, preloadImg, templates, ui, win, _i, _len, _ref,
     __hasProp = {}.hasOwnProperty;
 
   win = this;
@@ -245,6 +245,14 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
   $("head").append("<link rel='stylesheet' type='text/css' href='" + o.dir + "api/js/source/jquery.fancybox.css' media='all' />");
 
   $("head").append("<link rel='stylesheet' type='text/css' href='" + o.dir + "api/js/source/helpers/jquery.fancybox-thumbs.css' media='all' />");
+
+  preloadImg = ["temp1.png", "loading.gif"];
+
+  for (_i = 0, _len = preloadImg.length; _i < _len; _i++) {
+    img = preloadImg[_i];
+    a = $("<img/>");
+    a.attr("src", "" + o.dir + "api/js/" + img);
+  }
 
   $.ajaxSetup({
     scriptCharset: "utf-8"
@@ -329,7 +337,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       }
     }, 300);
   }).on("refresh", function(e, data) {
-    var cart, i, ico, panel, t, _base, _i, _len, _ref1, _ref2;
+    var cart, i, ico, panel, t, _base, _j, _len1, _ref1, _ref2;
     t = $(this);
     panel = t.find(".oye_panel");
     cart = t.find(".oye_cart");
@@ -342,8 +350,8 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
     }
     data.current = null;
     _ref1 = data.list;
-    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-      i = _ref1[_i];
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      i = _ref1[_j];
       if ((i != null ? i.url : void 0) === location.href) {
         data.current = i;
       }
@@ -441,16 +449,16 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
     $.extend(para, data);
     cartData.status.action = para.action;
     return $.getJSON("" + o.dir + "api/plugins.php?callback=?", para, function(data) {
-      var i, item, _i, _j, _len, _len1, _ref1;
+      var i, item, _j, _k, _len1, _len2, _ref1;
       if (data.Error) {
         $.extend(cartData.status, data);
         ui.trigger("alert", data.msg);
       } else {
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          item = data[_i];
+        for (_j = 0, _len1 = data.length; _j < _len1; _j++) {
+          item = data[_j];
           _ref1 = item.pic;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            i = _ref1[_j];
+          for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+            i = _ref1[_k];
             if (!/^http/.test(i.href)) {
               i.href = o.dir + i.href;
             }
@@ -494,11 +502,11 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
   };
 
   o.screenShotDone = function() {
-    return ui.trigger("statusIn", "截图保存中...");
+    return ui.trigger("statusIn", "截图保存中<img alt='...' src='" + o.dir + "api/js/loading.gif' class='oye_loading'/>");
   };
 
   o.screenShotCallback = function(data) {
-    var i, _i, _len;
+    var i, _j, _len1;
     if (typeof console !== "undefined" && console !== null) {
       console.log("截图成功", data);
     }
@@ -509,8 +517,8 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       return ui.trigger("alert", data.msg);
     } else {
       this.cartData.timeMark = (new Date()).toLocaleTimeString();
-      for (_i = 0, _len = data.length; _i < _len; _i++) {
-        i = data[_i];
+      for (_j = 0, _len1 = data.length; _j < _len1; _j++) {
+        i = data[_j];
         if (!/^http/.test(i.href)) {
           i.href = o.dir + i.href;
         }
