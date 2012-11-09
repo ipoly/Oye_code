@@ -173,6 +173,7 @@ body {
   top: 0;
 }
 #oye_notice {
+  white-space: nowrap;
   display: none;
   position: absolute;
   right: -1px;

@@ -40,8 +40,8 @@ $ ->
                     <tr>
                         <td></td>
                         <td>代购商品</td>
-                        <td>商城</td>
-                        <td>代购数量</td>
+                        <td>来源商城</td>
+                        <td>数量</td>
                         <td>操作</td>
                     </tr>
                 <thead>
@@ -51,10 +51,7 @@ $ ->
                         <th><a href="${item.url}" title="${item.goodsName}"><img src="${item.img}"/></a></th>
                         <td><a href="${item.url}" title="${item.goodsName}">${item.goodsName}</a></td>
                         <td>${item.siteName}</td>
-                        <td>
-                            <input name="id" type="hidden" value="${item.CartID}"/>
-                            <input data-id="${item.CartID}" name="number" min="1" type="number" value="${item.number}"/>
-                        </td>
+                        <td>${item.number}</td>
                         <td><span data-id="${item.CartID}" class="oye_del">删除</span></td>
                     </tr>
                 {@/each}
@@ -175,6 +172,7 @@ $ ->
         # 判断当前页是否已在购物车中
         data.current = i for i in data.list when i?.url is location.href
         if data.current
+            data.current.pic?= []
             $("#oye_id").val(data.current.CartID)
             panel.html(templates.panel1.render(data))
         else
