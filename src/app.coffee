@@ -214,7 +214,7 @@ o.on("fetchdata",->
     data.goodsName ?= document.title
     data.price ?= ""
     data.prop ?= ""
-    data.img ?= @fetchImg()
+    data.img ?= @fetchImg() or ""
     data.siteName ?= location.hostname
     data.url = win.location.href
     data.action = "AddCart"

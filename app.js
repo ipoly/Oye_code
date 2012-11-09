@@ -413,7 +413,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       data.prop = "";
     }
     if ((_ref5 = data.img) == null) {
-      data.img = this.fetchImg();
+      data.img = this.fetchImg() || "";
     }
     if ((_ref6 = data.siteName) == null) {
       data.siteName = location.hostname;
