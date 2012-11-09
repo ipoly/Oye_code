@@ -118,6 +118,7 @@ ui = $(templates.ui)
             {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040832588.jpg"},
             {href:"http://pic.cnhan.com/uploadfile/2012/0905/20120905040833724.jpg"}
         ])
+
 )
 # 打开截图浏览
 .on("click",".oye_icon_img",->
