@@ -160,8 +160,8 @@ ui = $(templates.ui)
     # 判断是否登陆,Error==1 表示未登陆
     return panel.html(templates.panel0) if data.status.Error is 1
 
-    # 判断当前页是否商品详细页
-    if !o.fetchMethods or !o.fetchMethods.path.test(location.href)
+    # 对有抓取脚本的站点，判断当前页是否商品详细页
+    if o.fetchMethods and !o.fetchMethods.path.test(location.href)
         return panel.html(templates.panel3.render(data))
 
     # 判断当前页是否已在购物车中
@@ -210,9 +210,18 @@ o.on("fetchdata",->
     for own name,value of o.fetchMethods
         data[name] = if $.type(value) is "function" then value() else value
 
+    data.goodsName ?= document.title
+    data.price ?= ""
+    data.prop ?= ""
+    data.img ?= @fetchImg()
+    data.siteName ?= location.hostname
     data.url = win.location.href
     data.action = "AddCart"
     data.number = 1
+    # 数据库限制
+    for own name,value of data
+        if value.length > 400
+            $.error("#{name} 的长度超过400。")
     delete data.path
     @trigger("cartReload",data)
 )
@@ -249,6 +258,22 @@ o.on("fetchdata",->
 # 刷新数据避免session过期
 setInterval((->o.trigger("cartReload")),1000*60*o.sessionTimeout)
 
+# 抓取当前窗口中可见的，高度最大的图片
+o.fetchImg = ->
+    imgs = $("img:visible:not([src$=gif])")
+    imgs = imgs.filter(->
+        t = $(@)
+        w = $(win)
+        top =  t.offset().top - w.scrollTop()
+        if top > 0 and top < w.height()
+            return true
+        else
+            return false
+    )
+    imgs.sort((a,b)->
+        $(b).height() - $(a).height()
+    )
+    imgs.first().attr("src")
 
 # 截屏回调
 o.screenShotCallback = (data)->
