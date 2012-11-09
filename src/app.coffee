@@ -79,7 +79,7 @@ templates = {
 
     # 当前页不在购物车中
     panel2:juicer("""
-        <a title="查看截图" class="oye_icon oye_icon_cart"><i class="oye_cart_part"></i><span class="oye_inCart">${list.length}</span></a>
+        <a title="查看购物车" class="oye_icon oye_icon_cart"><i class="oye_cart_part"></i><span class="oye_inCart">${list.length}</span></a>
         <button title="立即订购" type="button" id="oye_add"></button>
     """)
 
