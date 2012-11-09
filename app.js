@@ -249,7 +249,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       return ui.trigger("refresh", o.cartData);
     });
     templates = {
-      ui: "<div class=\"oye_ui\">\n    <a id=\"oye_logo\" href=\"http://www.oye.com\"></a>\n    <div id=\"oye_notice\"></div>\n    <form class=\"oye_cart\" action=\"http://www.qq.com\" target=\"_blank\" method=\"get\"></form>\n    <div class=\"oye_panel\"> </div>\n</div>",
+      ui: "<div class=\"oye_ui\">\n    <a id=\"oye_logo\" href=\"http://www.oye.com\"></a>\n    <form class=\"oye_cart\" action=\"http://www.qq.com\" target=\"_blank\" method=\"get\"></form>\n    <div class=\"oye_panel\"> </div>\n    <div id=\"oye_notice\"></div>\n</div>",
       cart: juicer("<table>\n    <caption>测试：${timeMark}</caption>\n    <thead>\n        <tr>\n            <td></td>\n            <td>代购商品</td>\n            <td>来源商城</td>\n            <td>数量</td>\n            <td>操作</td>\n        </tr>\n    <thead>\n    <tbody>\n    {@each list as item}\n        <tr>\n            <th><a href=\"${item.url}\" title=\"${item.goodsName}\"><img src=\"${item.img}\"/></a></th>\n            <td><a href=\"${item.url}\" title=\"${item.goodsName}\">${item.goodsName}</a></td>\n            <td>${item.siteName}</td>\n            <td>${item.number}</td>\n            <td><span data-id=\"${item.CartID}\" class=\"oye_del\">删除</span></td>\n        </tr>\n    {@/each}\n    </tbody>\n    <tfoot>\n        <tr>\n            <td colspan=\"5\">\n                <button type=\"submit\" id=\"oye_submit\"></button>\n                <p>查看操作完整购物车，请前往 <a href=\"\">噢叶商城购物车</a></p>\n            </td>\n        </tr>\n    </tfoot>\n</table>"),
       panel0: "<span class=\"lh40\">点我 <a href=\"http://www.oye.com/user.php?act=default\">登录</a> 以使用代购功能</span>",
       panel1: juicer("<a title=\"查看购物车\" class=\"oye_icon oye_icon_cart\"><i class=\"oye_cart_part\"></i><span class=\"oye_inCart\">${list.length}</span></a>\n<a title=\"查看截图\" class=\"oye_icon oye_icon_img\"><span class=\"oye_inPic\">${current.pic.length}</span></a>\n<a title=\"添加截图\" class=\"oye_icon oye_icon_camera\" id=\"oye_screenshot\"></a>"),
@@ -264,7 +264,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       var data;
       data = {};
       data.CartID = $(this).data("id");
-      data.action = "del";
+      data.action = "DelCart";
       return o.trigger("cartReload", data);
     }).on("click", "#oye_screenshot", function() {
       var trigger;
@@ -290,12 +290,6 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
           return ui.trigger("show");
         }
       });
-    }).on("keyup", "input[type=number]", function() {
-      var t;
-      t = $(this);
-      if (!Number(t.val())) {
-        return t.val(0);
-      }
     }).on("hover", ".oye_icon_cart,.oye_cart", function(e) {
       var cart, icon, type;
       cart = $(".oye_cart");

@@ -26,9 +26,9 @@ $ ->
         ui:"""
             <div class="oye_ui">
                 <a id="oye_logo" href="http://www.oye.com"></a>
-                <div id="oye_notice"></div>
                 <form class="oye_cart" action="http://www.qq.com" target="_blank" method="get"></form>
                 <div class="oye_panel"> </div>
+                <div id="oye_notice"></div>
             </div>
         """
 
@@ -99,7 +99,7 @@ $ ->
     .on("click",".oye_del",->
         data = {}
         data.CartID = $(@).data("id")
-        data.action = "del"
+        data.action = "DelCart"
         o.trigger("cartReload",data)
     )
     # 调用截图插件
@@ -133,11 +133,6 @@ $ ->
             afterClose:->
                 ui.trigger("show")
         })
-    )
-    # 商品数量控件限制为数字
-    .on("keyup","input[type=number]",->
-        t = $(@)
-        t.val(0) unless Number(t.val())
     )
     # 显示购物车列表
     .on("hover",".oye_icon_cart,.oye_cart",(e)->
