@@ -26,7 +26,7 @@ templates = {
     ui:"""
         <div class="oye_ui">
             <a id="oye_logo" href="http://www.oye.com"></a>
-            <form class="oye_cart" action="http://www.qq.com" target="_blank" method="get"></form>
+            <div class="oye_cart"></div>
             <div class="oye_panel"> </div>
             <div id="oye_notice"></div>
         </div>
@@ -59,8 +59,8 @@ templates = {
             <tfoot>
                 <tr>
                     <td colspan="5">
-                        <button type="submit" id="oye_submit"></button>
-                        <p>查看操作完整购物车，请前往 <a href="">噢叶商城购物车</a></p>
+                        <a href="#{o.dir}/temp1.png" id="oye_submit"></a>
+                        <p>查看操作完整购物车，请前往 <a href="#{o.dir}/temp1.png" target="_blank">噢叶商城购物车</a></p>
                     </td>
                 </tr>
             </tfoot>
@@ -177,9 +177,7 @@ ui = $(templates.ui)
 
     ico = $(".oye_icon_cart")
     if cart.is(":visible")
-        console.log "ico:",ico.is(".active")
         ico.addClass("active")
-        console.log "ico:",ico.is(".active")
 
 )
 # 消息提示
