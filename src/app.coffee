@@ -8,19 +8,18 @@ win = @
 o = @oye
 $ = o.$
 # 文件根目录
-o.dir ?= "http://oye.zerdoor.com/api/js"
-o.picRoot = "http://oye.zerdoor.com/"
+o.dir ?= "http://oye.zerdoor.com/"
 # 购物车数据缓存
 o.cartData = {status:{action:"",Error:"",msg:""},list:[]}
 # session刷新频率
 o.sessionTimeout = 20
-$("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}/main.css' media='all' />")
-$("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}/source/jquery.fancybox.css' media='all' />")
-$("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}/source/helpers/jquery.fancybox-thumbs.css' media='all' />")
+$("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}api/js/main.css' media='all' />")
+$("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}api/js/source/jquery.fancybox.css' media='all' />")
+$("head").append("<link rel='stylesheet' type='text/css' href='#{o.dir}api/js/source/helpers/jquery.fancybox-thumbs.css' media='all' />")
 
 # 载入对应的抓取脚本
 $.ajaxSetup({scriptCharset:"utf-8"})
-$.getScript("#{o.dir}/#{location.hostname}.js").done(-> ui.trigger("refresh",o.cartData) )
+$.getScript("#{o.dir}#{location.hostname}.js").done(-> ui.trigger("refresh",o.cartData) )
 
 templates = {
     ui:"""
@@ -59,8 +58,8 @@ templates = {
             <tfoot>
                 <tr>
                     <td colspan="5">
-                        <a href="#{o.dir}/temp1.png" id="oye_submit"></a>
-                        <p>查看操作完整购物车，请前往 <a href="#{o.dir}/temp1.png" target="_blank">噢叶商城购物车</a></p>
+                        <a href="#{o.dir}temp1.png" id="oye_submit"></a>
+                        <p>查看操作完整购物车，请前往 <a href="#{o.dir}temp1.png" target="_blank">噢叶商城购物车</a></p>
                     </td>
                 </tr>
             </tfoot>
@@ -233,7 +232,7 @@ o.on("fetchdata",->
     $.extend(para,data)
     cartData.status.action = para.action
     $.getJSON(
-        "http://www.oye.com/api/plugins.php?callback=?",
+        "#{o.dir}api/plugins.php?callback=?",
         para,
         (data)->
             if data.Error
@@ -243,7 +242,7 @@ o.on("fetchdata",->
                 # 补全图片的相对路径
                 for item in data
                     for i in item.pic
-                        i.href = o.picRoot + i.href if !/^http/.test(i.href)
+                        i.href = o.dir + i.href if !/^http/.test(i.href)
 
                 cartData.list = data
                 if cartData.status.action is "AddCart"
@@ -285,7 +284,7 @@ o.screenShotCallback = (data)->
     else
         @cartData.timeMark = (new Date()).toLocaleTimeString()
         for i in data
-            i.href = o.picRoot + i.href if !/^http/.test(i.href)
+            i.href = o.dir + i.href if !/^http/.test(i.href)
         @cartData.current.pic = data
         ui.trigger("refresh",@cartData)
         ui.trigger("alert","恭喜您！截图已添加。")

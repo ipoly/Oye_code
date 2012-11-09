@@ -226,10 +226,8 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
   $ = o.$;
 
   if ((_ref = o.dir) == null) {
-    o.dir = "http://oye.zerdoor.com/api/js";
+    o.dir = "http://oye.zerdoor.com/";
   }
-
-  o.picRoot = "http://oye.zerdoor.com/";
 
   o.cartData = {
     status: {
@@ -242,23 +240,23 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
 
   o.sessionTimeout = 20;
 
-  $("head").append("<link rel='stylesheet' type='text/css' href='" + o.dir + "/main.css' media='all' />");
+  $("head").append("<link rel='stylesheet' type='text/css' href='" + o.dir + "api/js/main.css' media='all' />");
 
-  $("head").append("<link rel='stylesheet' type='text/css' href='" + o.dir + "/source/jquery.fancybox.css' media='all' />");
+  $("head").append("<link rel='stylesheet' type='text/css' href='" + o.dir + "api/js/source/jquery.fancybox.css' media='all' />");
 
-  $("head").append("<link rel='stylesheet' type='text/css' href='" + o.dir + "/source/helpers/jquery.fancybox-thumbs.css' media='all' />");
+  $("head").append("<link rel='stylesheet' type='text/css' href='" + o.dir + "api/js/source/helpers/jquery.fancybox-thumbs.css' media='all' />");
 
   $.ajaxSetup({
     scriptCharset: "utf-8"
   });
 
-  $.getScript("" + o.dir + "/" + location.hostname + ".js").done(function() {
+  $.getScript("" + o.dir + location.hostname + ".js").done(function() {
     return ui.trigger("refresh", o.cartData);
   });
 
   templates = {
     ui: "<div class=\"oye_ui\">\n    <a id=\"oye_logo\" href=\"http://www.oye.com\"></a>\n    <div class=\"oye_cart\"></div>\n    <div class=\"oye_panel\"> </div>\n    <div id=\"oye_notice\"></div>\n</div>",
-    cart: juicer("<table>\n    <caption>测试：${timeMark}</caption>\n    <thead>\n        <tr>\n            <td></td>\n            <td>代购商品</td>\n            <td>来源商城</td>\n            <td>数量</td>\n            <td>操作</td>\n        </tr>\n    <thead>\n    <tbody>\n    {@each list.slice(0,5) as item}\n        <tr>\n            <th><a href=\"${item.url}\" title=\"${item.goodsName}\"><img src=\"${item.img}\"/></a></th>\n            <td><a href=\"${item.url}\" title=\"${item.goodsName}\">${item.goodsName}</a></td>\n            <td>${item.siteName}</td>\n            <td>${item.number}</td>\n            <td><span data-id=\"${item.CartID}\" class=\"oye_del\">删除</span></td>\n        </tr>\n    {@/each}\n    </tbody>\n    <tfoot>\n        <tr>\n            <td colspan=\"5\">\n                <a href=\"" + o.dir + "/temp1.png\" id=\"oye_submit\"></a>\n                <p>查看操作完整购物车，请前往 <a href=\"" + o.dir + "/temp1.png\" target=\"_blank\">噢叶商城购物车</a></p>\n            </td>\n        </tr>\n    </tfoot>\n</table>"),
+    cart: juicer("<table>\n    <caption>测试：${timeMark}</caption>\n    <thead>\n        <tr>\n            <td></td>\n            <td>代购商品</td>\n            <td>来源商城</td>\n            <td>数量</td>\n            <td>操作</td>\n        </tr>\n    <thead>\n    <tbody>\n    {@each list.slice(0,5) as item}\n        <tr>\n            <th><a href=\"${item.url}\" title=\"${item.goodsName}\"><img src=\"${item.img}\"/></a></th>\n            <td><a href=\"${item.url}\" title=\"${item.goodsName}\">${item.goodsName}</a></td>\n            <td>${item.siteName}</td>\n            <td>${item.number}</td>\n            <td><span data-id=\"${item.CartID}\" class=\"oye_del\">删除</span></td>\n        </tr>\n    {@/each}\n    </tbody>\n    <tfoot>\n        <tr>\n            <td colspan=\"5\">\n                <a href=\"" + o.dir + "temp1.png\" id=\"oye_submit\"></a>\n                <p>查看操作完整购物车，请前往 <a href=\"" + o.dir + "temp1.png\" target=\"_blank\">噢叶商城购物车</a></p>\n            </td>\n        </tr>\n    </tfoot>\n</table>"),
     panel0: "<span class=\"lh40\">点我 <a href=\"http://www.oye.com/user.php?act=default\">登录</a> 以使用代购功能</span>",
     panel1: juicer("<a title=\"查看购物车\" class=\"oye_icon oye_icon_cart\"><i class=\"oye_cart_part\"></i><span class=\"oye_inCart\">${list.length}</span></a>\n<a title=\"查看截图\" class=\"oye_icon oye_icon_img\"><span class=\"oye_inPic\">${current.pic.length}</span></a>\n<a title=\"添加截图\" class=\"oye_icon oye_icon_camera\" id=\"oye_screenshot\"></a>"),
     panel2: juicer("<a title=\"查看购物车\" class=\"oye_icon oye_icon_cart\"><i class=\"oye_cart_part\"></i><span class=\"oye_inCart\">${list.length}</span></a>\n<button title=\"立即订购\" type=\"button\" id=\"oye_add\"></button>"),
@@ -438,7 +436,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
     };
     $.extend(para, data);
     cartData.status.action = para.action;
-    return $.getJSON("http://www.oye.com/api/plugins.php?callback=?", para, function(data) {
+    return $.getJSON("" + o.dir + "api/plugins.php?callback=?", para, function(data) {
       var i, item, _i, _j, _len, _len1, _ref1;
       if (data.Error) {
         $.extend(cartData.status, data);
@@ -450,7 +448,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             i = _ref1[_j];
             if (!/^http/.test(i.href)) {
-              i.href = o.picRoot + i.href;
+              i.href = o.dir + i.href;
             }
           }
         }
@@ -506,7 +504,7 @@ b=a.children(),b=b.innerWidth()-b.height(99).innerWidth();a.remove();return b});
       for (_i = 0, _len = data.length; _i < _len; _i++) {
         i = data[_i];
         if (!/^http/.test(i.href)) {
-          i.href = o.picRoot + i.href;
+          i.href = o.dir + i.href;
         }
       }
       this.cartData.current.pic = data;
