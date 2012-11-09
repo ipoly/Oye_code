@@ -173,7 +173,8 @@ $ ->
         data.current = i for i in data.list when i?.url is location.href
         if data.current
             data.current.pic?= []
-            $("#oye_id").val(data.current.CartID)
+            # $("#oye_id").val(data.current.CartID)
+            win.oye_id = data.current.CartID
             panel.html(templates.panel1.render(data))
         else
             panel.html(templates.panel2.render(data))
