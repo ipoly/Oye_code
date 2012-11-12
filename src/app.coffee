@@ -207,7 +207,14 @@ ui = $(templates.ui)
 )
 
 
-$("body").append(ui)
+body = $("body").append(ui)
+if $.browser.msie and $.browser.version is "6.0"
+    $win = $(win)
+    $win.on("scroll resize",->
+        ui.css("bottom",->
+            body.innerHeight() - $win.height() - $(win).scrollTop()
+        )
+    )
 
 # 使用jquery的事件绑定来扩展oye对象
 o.on = ->

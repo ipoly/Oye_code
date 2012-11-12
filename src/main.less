@@ -23,7 +23,7 @@ html,body {
     background: url(img/sprite.png) 0 0 no-repeat;
     border-right: 1px solid #d3d3d3;
     _position: absolute;
-    _top: expression(~'document.documentElement.scrollTop + document.documentElement.offsetHeight - this.offsetHeight  + "px"');
+    // _top: expression(~'document.documentElement.scrollTop + document.documentElement.offsetHeight - this.offsetHeight - 10  + "px"');
     z-index: 9999999999;
     a {color: @blue;}
     .oye_cart {
@@ -188,6 +188,8 @@ html,body {
     background-color: #FEB753;
     color: #fff;
     padding: 0 10px;
+    height: 20px;
+    line-height: 20px;
 }
 
 .oye_loading {
