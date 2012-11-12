@@ -189,6 +189,7 @@ ui = $(templates.ui)
 
 )
 # 消息和状态提示
+# 消息默认显示3秒，状态则在更新前一直显示
 .on("alert statusIn",(e,data)->
     return unless data?
     n = $(@).find("#oye_notice")
