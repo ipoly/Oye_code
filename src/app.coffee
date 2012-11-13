@@ -59,7 +59,12 @@ templates = {
                     <td><a href="${item.url}" title="${item.goodsName}">${item.goodsName}</a></td>
                     <td>${item.siteName}</td>
                     <td>${item.number}</td>
-                    <td><span data-id="${item.CartID}" class="oye_del">删除</span></td>
+                    <td>
+                        {@if item.pic.length}
+                        <span data-id="${item.CartID}" class="oye_screenShotView">查看截图(${item.pic.length})</span>
+                        {@/if}
+                        <span data-id="${item.CartID}" class="oye_del">删除</span>
+                    </td>
                 </tr>
             {@/each}
             </tbody>
@@ -128,19 +133,29 @@ ui = $(templates.ui)
 
 )
 # 打开截图浏览
+.on("screenShotShow",(e,list)->
+    if list?.length
+        ui.trigger("hide")
+        $.fancybox.open(list,{
+            helpers : {
+                    thumbs : {
+                        width  : 50,
+                        height : 50
+                    }
+            }
+            afterClose:->
+                ui.trigger("show")
+        })
+)
+# 从列表查看截图
+.on("click",".oye_screenShotView",->
+    CartID = $(@).data("id")
+    pic = i.pic for i in o.cartData.list when parseInt(i.CartID) == CartID
+    ui.trigger("screenShotShow",[pic])
+)
+# 从主面板"查看截图"
 .on("click",".oye_icon_img",->
-    return unless o.cartData.current.pic.length
-    ui.trigger("hide")
-    $.fancybox.open(o.cartData.current.pic,{
-        helpers : {
-                thumbs : {
-                    width  : 50,
-                    height : 50
-                }
-        }
-        afterClose:->
-            ui.trigger("show")
-    })
+    ui.trigger("screenShotShow",[o.cartData.current.pic])
 )
 # 显示购物车列表
 .on("hover",".oye_icon_cart,.oye_cart",(e)->

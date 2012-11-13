@@ -71,7 +71,8 @@ body {
 .oye_ui .oye_cart tfoot td {
   text-align: right;
 }
-.oye_ui .oye_cart .oye_del {
+.oye_ui .oye_cart .oye_del,
+.oye_ui .oye_cart .oye_screenShotView {
   color: #3399ff;
   cursor: pointer;
 }

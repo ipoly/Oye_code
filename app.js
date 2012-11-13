@@ -221,7 +221,7 @@
 
   templates = {
     ui: "<div class=\"oye_ui\">\n    <a id=\"oye_logo\" href=\"" + o.dir + "\"></a>\n    <div class=\"oye_cart\"></div>\n    <div class=\"oye_panel\"> </div>\n    <div id=\"oye_notice\"></div>\n</div>",
-    cart: juicer("<table>\n    <caption>测试：${timeMark}</caption>\n    <thead>\n        <tr>\n            <td></td>\n            <td>代购商品</td>\n            <td>来源商城</td>\n            <td>数量</td>\n            <td>操作</td>\n        </tr>\n    <thead>\n    <tbody>\n    {@each list.slice(0,5) as item}\n        <tr>\n            <th><a href=\"${item.url}\" title=\"${item.goodsName}\"><img src=\"${item.img}\"/></a></th>\n            <td><a href=\"${item.url}\" title=\"${item.goodsName}\">${item.goodsName}</a></td>\n            <td>${item.siteName}</td>\n            <td>${item.number}</td>\n            <td><span data-id=\"${item.CartID}\" class=\"oye_del\">删除</span></td>\n        </tr>\n    {@/each}\n    </tbody>\n    <tfoot>\n        <tr>\n            <td colspan=\"5\">\n                <a href=\"" + o.dir + "temp1.png\" id=\"oye_submit\"></a>\n                <p>查看操作完整购物车，请前往 <a href=\"" + o.dir + "temp1.png\" target=\"_blank\">噢叶商城购物车</a></p>\n            </td>\n        </tr>\n    </tfoot>\n</table>"),
+    cart: juicer("<table>\n    <caption>测试：${timeMark}</caption>\n    <thead>\n        <tr>\n            <td></td>\n            <td>代购商品</td>\n            <td>来源商城</td>\n            <td>数量</td>\n            <td>操作</td>\n        </tr>\n    <thead>\n    <tbody>\n    {@each list.slice(0,5) as item}\n        <tr>\n            <th><a href=\"${item.url}\" title=\"${item.goodsName}\"><img src=\"${item.img}\"/></a></th>\n            <td><a href=\"${item.url}\" title=\"${item.goodsName}\">${item.goodsName}</a></td>\n            <td>${item.siteName}</td>\n            <td>${item.number}</td>\n            <td>\n                {@if item.pic.length}\n                <span data-id=\"${item.CartID}\" class=\"oye_screenShotView\">查看截图(${item.pic.length})</span>\n                {@/if}\n                <span data-id=\"${item.CartID}\" class=\"oye_del\">删除</span>\n            </td>\n        </tr>\n    {@/each}\n    </tbody>\n    <tfoot>\n        <tr>\n            <td colspan=\"5\">\n                <a href=\"" + o.dir + "temp1.png\" id=\"oye_submit\"></a>\n                <p>查看操作完整购物车，请前往 <a href=\"" + o.dir + "temp1.png\" target=\"_blank\">噢叶商城购物车</a></p>\n            </td>\n        </tr>\n    </tfoot>\n</table>"),
     panel0: "<span class=\"lh40\">点我 <a href=\"" + o.dir + "user.php?act=default\">登录</a> 以使用代购功能</span>",
     panel1: juicer("<a title=\"查看购物车\" class=\"oye_icon oye_icon_cart\"><i class=\"oye_cart_part\"></i><span class=\"oye_inCart\">${list.length}</span></a>\n<a title=\"查看截图\" class=\"oye_icon oye_icon_img\"><span class=\"oye_inPic\">${current.pic.length}</span></a>\n<a title=\"添加截图\" class=\"oye_icon oye_icon_camera\" id=\"oye_screenshot\"></a>"),
     panel2: juicer("<a title=\"查看购物车\" class=\"oye_icon oye_icon_cart\"><i class=\"oye_cart_part\"></i><span class=\"oye_inCart\">${list.length}</span></a>\n<button title=\"立即订购\" type=\"button\" id=\"oye_add\"></button>"),
@@ -262,22 +262,34 @@
         }
       ]);
     }
-  }).on("click", ".oye_icon_img", function() {
-    if (!o.cartData.current.pic.length) {
-      return;
-    }
-    ui.trigger("hide");
-    return $.fancybox.open(o.cartData.current.pic, {
-      helpers: {
-        thumbs: {
-          width: 50,
-          height: 50
+  }).on("screenShotShow", function(e, list) {
+    if (list != null ? list.length : void 0) {
+      ui.trigger("hide");
+      return $.fancybox.open(list, {
+        helpers: {
+          thumbs: {
+            width: 50,
+            height: 50
+          }
+        },
+        afterClose: function() {
+          return ui.trigger("show");
         }
-      },
-      afterClose: function() {
-        return ui.trigger("show");
+      });
+    }
+  }).on("click", ".oye_screenShotView", function() {
+    var CartID, i, pic, _j, _len1, _ref1;
+    CartID = $(this).data("id");
+    _ref1 = o.cartData.list;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      i = _ref1[_j];
+      if (parseInt(i.CartID) === CartID) {
+        pic = i.pic;
       }
-    });
+    }
+    return ui.trigger("screenShotShow", [pic]);
+  }).on("click", ".oye_icon_img", function() {
+    return ui.trigger("screenShotShow", [o.cartData.current.pic]);
   }).on("hover", ".oye_icon_cart,.oye_cart", function(e) {
     var cart, icon, type;
     cart = $(".oye_cart");
