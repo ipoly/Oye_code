@@ -61,7 +61,7 @@ templates = {
                     <td>${item.number}</td>
                     <td>
                         {@if item.pic.length}
-                        <span data-id="${item.CartID}" class="oye_screenShotView">查看截图(${item.pic.length})</span>
+                        <span data-id="${item.CartID}" class="oye_screenShotView">查看截图</span>
                         {@/if}
                         <span data-id="${item.CartID}" class="oye_del">删除</span>
                     </td>
@@ -189,7 +189,7 @@ ui = $(templates.ui)
 
     # 判断当前页是否已在购物车中
     data.current = null
-    data.current = i for i in data.list when i?.url is location.href
+    data.current = i for i in data.list when i.url is location.href or o.fetchMethods?.identify?(i)
     if data.current
         data.current.pic?= []
         # $("#oye_id").val(data.current.CartID)
@@ -260,6 +260,7 @@ o.on("fetchdata",->
         if value.length > 400
             $.error("#{name} 的长度超过400。")
     delete data.path
+    delete data.identify
     @trigger("cartReload",data)
 )
 # 刷新购物车数据

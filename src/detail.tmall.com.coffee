@@ -10,4 +10,12 @@ $ = @oye.$
         el.find("li:not(.tb-selected),i").remove()
         el.text()
     "img":-> $("#J_ImgBooth").attr("src")
+    # 商品页面鉴定
+    "identify": (item)->
+        return false unless item
+        rule = /id=\w+/
+        itemID = item.url.match(rule)?[0]
+        return false unless itemID
+        pageID = location.href.match(rule)?[0]
+        return pageID is itemID
 }
