@@ -1,7 +1,7 @@
 $ = @oye.$
 @oye.fetchMethods = {
     "siteName":"淘宝"
-    "path":/item\.htm/
+    "path":/./
     "goodsName":-> $("#detail .tb-detail-hd h3").text()
     "price":->
         $("#J_StrPrice:not(.del),#J_PromoPrice strong").text()
