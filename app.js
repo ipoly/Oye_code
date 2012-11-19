@@ -358,8 +358,8 @@
 
   body = $("body").append(ui);
 
-  body.on("click", "a[href='javascript:;']", function(e) {
-    return e.preventDefault();
+  body.on("click", "a[href^=javascript]", function() {
+    return $(this).attr("target", "_self");
   });
 
   if ($.browser.msie && $.browser.version === "6.0") {
