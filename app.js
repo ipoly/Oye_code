@@ -358,6 +358,10 @@
 
   body = $("body").append(ui);
 
+  body.on("click", "a[href='javascript:;']", function(e) {
+    return e.preventDefault();
+  });
+
   if ($.browser.msie && $.browser.version === "6.0") {
     $win = $(win);
     $win.on("scroll resize", function() {

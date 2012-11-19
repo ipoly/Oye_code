@@ -223,6 +223,7 @@ ui = $(templates.ui)
 
 
 body = $("body").append(ui)
+body.on("click","a[href='javascript:;']",(e)-> e.preventDefault());
 if $.browser.msie and $.browser.version is "6.0"
     $win = $(win)
     $win.on("scroll resize",->
